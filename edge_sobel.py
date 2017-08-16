@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 from convolve_np import convolve_np
+import time
 
 img = cv2.imread('images/jet.jpg', cv2.IMREAD_GRAYSCALE)
 
@@ -16,12 +17,17 @@ Hy = np.array([[-1, -2, -1],
                [0, 0, 0],
                [1, 2, 1]])
 
+t0 = time.time()
+
 img_x = convolve_np(img, Hx) / 8.0
 img_y = convolve_np(img, Hy) / 8.0
 
 img_out = np.sqrt(np.power(img_x, 2) + np.power(img_y, 2))
 
 img_out = (img_out / np.max(img_out)) * 255
+
+t1 = time.time()
+print(t1-t0)
 
 cv2.imwrite('images/edge_sobel.jpg', img_out)
 
